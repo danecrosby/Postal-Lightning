@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: staging
+    database: geo-lightning
+    schema: lightning_strikes
+
+    tables:
+      - name: lightning_2021
+      - name: zipcodes
+      - name: states
