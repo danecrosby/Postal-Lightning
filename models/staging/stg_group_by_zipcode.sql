@@ -1,4 +1,4 @@
---some zipcodes have multiple data points in them due to their large size. these can be combined by summing lightning strike counts and discarding the geo data.
+--some zipcodes have multiple geom_center_points in them due to their large size. these can be combined by summing lightning strike counts and discarding the geo data
 {{
     config(
         materialized='view'
