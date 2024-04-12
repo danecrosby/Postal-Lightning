@@ -6,6 +6,6 @@ sources:
     schema: lightning_strikes
 
     tables:
-      - name: lightning_2021
-      - name: zipcodes
-      - name: states
+      - name: lightning_2021 #raw lightning data in the US for 2021 taken from NOAA's bigquery table https://console.cloud.google.com/bigquery(cameo:product/noaa-public/lightning)?project=geo-lightning
+      - name: zipcodes #geometry data for each zipcode
+      - name: states #list of all 50 US States
