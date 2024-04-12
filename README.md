@@ -28,4 +28,8 @@ Using dbt Cloud to create a pipeline of tables in BigQuery. The pipleline looks 
 
 ### Clustering and Partitioning of core models
 
+daily_lightning            |  daily_lightning_by_state |  monthly_lightning
+:-------------------------:|:-------------------------:|:-------------------------:
+![daily_lightning](https://github.com/danecrosby/Postal-Lightning/assets/59389278/ab3703ea-4f05-4cf1-b9f0-a16c2caf1777)  |  ![daily_by_states](https://github.com/danecrosby/Postal-Lightning/assets/59389278/202773c4-d9ea-4682-a68e-1515630bd1e0) | ![monthly_lightning](https://github.com/danecrosby/Postal-Lightning/assets/59389278/5fbefcd8-5495-43d1-b2c6-cb6cb0c91ea1)
+
 
