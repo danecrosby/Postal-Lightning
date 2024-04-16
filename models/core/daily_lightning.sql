@@ -1,5 +1,6 @@
 --takes lightning grouped by zipcode and removes zipcodes that have invalid/NULL states
 --materialized table that is paritioned by month(timestamp) and clustered by state and then date(daily)
+{{ config(
     materialized='table',
     partition_by={
       "field": "date",
