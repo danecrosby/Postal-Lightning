@@ -101,7 +101,7 @@ ON
 - Data could be better represented on a heatmap as lightning density rather than a number of lightning strikes. The problem above would need to be fixed before getting accurate lightning density, especially for smaller postal codes.
 
 ## Special Thanks
-Shout out to the DataTalks.Club for their excellent Data Engineering courses, the NOAA and Vaisala's National Lightning Detection Network for collecting/archiving the incredible amount of data used in this analysis, and finally Google Cloud for their 90-day trial period which has saved me at least $60 in storage and computation fees.
+Shout out to the [@DataTalksClub](https://datatalks.club/) for their excellent Data Engineering courses, the NOAA and Vaisala's National Lightning Detection Network for collecting/archiving the incredible amount of data used in this analysis, and finally Google Cloud for their 90-day trial period which has saved me at least $60 in storage and computation fees.
 
 
 
