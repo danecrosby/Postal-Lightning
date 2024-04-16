@@ -1,7 +1,7 @@
 # Postal-Lightning
 This project maps lightning strikes geographical data onto US Postal codes. This makes it easier to show the data as a heatmap or to track historical lightning data for individual postal codes.
 
-This project takes 2021 US lightning stike data from [NOAA Cloud-to-Ground Lightning Strikes](https://console.cloud.google.com/bigquery(cameo:product/noaa-public/lightning)?project=geo-lightning&ws=!1m0), daily lightning strikes aggregated into 0.1 x 0.1 degree tiles, sized roughly 11 km^2, and tries to map that data onto US postal codes by determining which of these tiles fall into which postal code area. It uses the [ST_CONTAINS() function](https://postgis.net/docs/ST_Contains.html) and postal code geographical polygon data from the zipcodes table map the tiles onto complex polygonal postal codes. 
+This project takes 2021 US lightning stike data from [NOAA Cloud-to-Ground Lightning Strikes](https://console.cloud.google.com/bigquery(cameo:product/noaa-public/lightning)?project=geo-lightning&ws=!1m0), daily lightning strikes aggregated into 0.1 x 0.1 degree tiles, sized roughly 11 km^2, and maps that data onto US postal codes by determining which of these tiles falls into which postal code area. It uses the `ST_CONTAINS()` [function](https://postgis.net/docs/ST_Contains.html) and the polygon from the zipcodes table and calculates if the center of the NOAA tiles lies in the postal code's polygon.
 
 ***Important Note**: in the US the terms Zip Code and Postal Code are used interchangeably.*
 
@@ -19,7 +19,7 @@ Using dbt Cloud to create a pipeline of tables in BigQuery. The pipleline looks 
   - **staging.states** - all 50 states, formatted as "California", "Arizona", "Washington", etc
 - ### staging models (unmaterialized)
   - **stg_lightning_remove_dupes** - the raw data from NOAA is extremely redundant, most of it is duplicates so we remove them first to reduce space and computation.
-  - **stg_geo_to_postal** - most of the computation happens here. This uses the [ST_CONTAINS() function](https://postgis.net/docs/ST_Contains.html) on a join of the lightning_2021 table and zipcodes table selecting rows where the geo data lies within postal code polygons. Even though the code is relatively simple this costs a lot to run with BigQuery, so make sure to test with smaller datasets first.
+  - **stg_geo_to_postal** - most of the computation happens here. This uses the `ST_CONTAINS()` [function](https://postgis.net/docs/ST_Contains.html) on a join of the lightning_2021 table and zipcodes table selecting rows where the geo data lies within postal code polygons. Even though the code is relatively simple this costs a lot to run with BigQuery, so make sure to test with smaller datasets first.
   - **stg_group_by_zipcode** - some postal codes are large and will have multiple tiles within them. This bins the tiles, summing the number_of_strikes and grouping by postal code.
 - ### core models (materialized)
   - **daily_lightning** - lightning strikes per zipcode per day (large table, too large for Looker Studio, so I have created other summed tables below)
@@ -81,7 +81,7 @@ ON
 # How to run
 - Fork the code into your own repository and connect dbt Cloud to your GitHub account. Instructions on how to do that here: https://docs.getdbt.com/docs/cloud/git/connect-github
 - Then link dbt Cloud to BigQuery or other data warehouse. Instructions here: https://docs.getdbt.com/guides/bigquery?step=1
-- You can then extract data from NOAA's lighting grid map from https://console.cloud.google.com/bigquery(cameo:product/noaa-public/lightning)?project=geo-lightning&ws=!1m0 . I don't reccomend sampling more than 1 year's worth since the entire table is 5.5 terrabytes large.
+- You can then extract data from NOAA's lighting grid map from https://console.cloud.google.com/bigquery(cameo:product/noaa-public/lightning)?project=geo-lightning&ws=!1m0 . I don't reccomend sampling more than 1 year's worth since the entire table is 5.5 terabytes large.
 
 
 
