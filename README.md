@@ -1,4 +1,4 @@
-# Postal-Lightning
+# Geo2Postal Lighting
 This project maps NOAA's lightning strike geo data onto US Postal codes. Geographical data is interesting, but doesn't tell us which postal code, county, city, or state that lightning is hitting. This project takes takes that geographical data and turns it into postal code data so it can be analyzed in a number of different ways. It also greatly reduces the size of the data for easy dashboarding.
 
 ### How it works
@@ -6,10 +6,11 @@ This project uses 2021's US lightning stike data from [NOAA Cloud-to-Ground Ligh
 
 ***Important Note**: in the US the terms Zip Code and Postal Code are used interchangeably.*
 
-## Tools used
-- BigQuery (Data Warehouse)
+## Tools and Technology
+- Google BigQuery (Data Warehouse)
 - dbt Cloud (Orchestration and Transformation)
-- Looker Studio (Dashboard)
+- Google Looker Studio (Dashboard)
+- dbt (Scripting language)
 
 # Workflow Orchestration
 Using dbt Cloud to create a pipeline of tables in BigQuery. The pipleline looks like this:
@@ -34,8 +35,7 @@ After building and running the workflow in dbt Cloud your views and tables shoul
 ![BigQuery tables](https://github.com/danecrosby/Postal-Lightning/assets/59389278/5adeec68-2b87-41fa-821f-8c30c77cac2d)
 
 ## Clustering and Paritioning of core models
-### These three tables are materialized because they will be accessed by Looker Studio.
-They are paritioned by month because by Looker Studio dashboard has monthly filters because lightning data and weather patterns become more interesting when viewed monthly. Clustering happens by state and then date. Clustering by state because the next important filter I use in the dashboard is the state filter. Lastly the clustering by date makes sense because every graph and map uses the date dimension and ordering chronologically should make those, esepcially graphs over time, faster and more efficient. One exception is the **monthly_lightning** table, which is partitioned by a month integer and therefore has no date dimension to cluster by, so I clustered by zipcode instead which might help if I wanted to list entries by zipcode.
+These materialized tables are paritioned by month because Looker Studio dashboard has monthly filters because lightning data and weather patterns become more interesting when viewed monthly. Clustering is by state and then date. Clustering by state because the next important filter I use in the dashboard is the state filter. Lastly the clustering by date makes sense because every graph and map uses the date dimension and ordering chronologically should make those, esepcially graphs over time, faster and more efficient. One exception is the **monthly_lightning** table, which is partitioned by a month integer and therefore has no date dimension to cluster by, so I clustered by zipcode instead which might help if I wanted to list entries by zipcode.
 
 daily_lightning            |  daily_lightning_by_state |  monthly_lightning
 :-------------------------:|:-------------------------:|:-------------------------:
@@ -82,7 +82,7 @@ ON
 # How to run
 - Fork the code into your own repository and connect dbt Cloud to your GitHub account. Instructions on how to do that here: https://docs.getdbt.com/docs/cloud/git/connect-github
 - Then link dbt Cloud to BigQuery or other data warehouse. Instructions here: https://docs.getdbt.com/guides/bigquery?step=1
-- You can then extract data from NOAA's lighting grid map from https://console.cloud.google.com/bigquery(cameo:product/noaa-public/lightning)?project=geo-lightning&ws=!1m0 . I don't reccomend sampling more than 1 year's worth since the entire table is 5.5 terabytes large.
+- You can then extract data from NOAA's lighting grid map from https://console.cloud.google.com/bigquery(cameo:product/noaa-public/lightning)?project=geo-lightning&ws=!1m0 . I don't reccomend sampling more than 1 year's worth since the entire table from 1987-present is 5.5 terabytes large.
 - Make sure to alter the schema.yml file in staging folder to fit your own BigQuery database. For example mine looks like:
   ```yml
   sources:
@@ -95,6 +95,13 @@ ON
       - name: zipcodes #geometry data for each zipcode
       - name: states #list of all 50 US States
   ```
+
+# Future improvements
+- Some of the smaller postal codes, often ones in high density city areas, are sometimes missed by the `ST_CONTAINS()` because the geo data grid is not of a high enough resolution. This could be fixed by turning the initial grid based geo data into a density gradient and multiplying the postal code's area by the density calculcated at the postal codes center point.
+- Data could be better represented on a heatmap as lightning density rather than number of strikes. The problem above would need to be fixed before getting accurate lightning density, especially for smaller postal codes.
+
+## Special Thanks
+Shout out to the DataTalks.Club for their excellent Data Engineering courses, the NOAA and Vaisala's National Lightning Detection Network for collecting/archiving the incredible amount of data used in this analysis, and finally Google Cloud for their 90 day trial period which has saved me at least $60 in storage and computation fees.
 
 
 
