@@ -82,7 +82,18 @@ ON
 - Fork the code into your own repository and connect dbt Cloud to your GitHub account. Instructions on how to do that here: https://docs.getdbt.com/docs/cloud/git/connect-github
 - Then link dbt Cloud to BigQuery or other data warehouse. Instructions here: https://docs.getdbt.com/guides/bigquery?step=1
 - You can then extract data from NOAA's lighting grid map from https://console.cloud.google.com/bigquery(cameo:product/noaa-public/lightning)?project=geo-lightning&ws=!1m0 . I don't reccomend sampling more than 1 year's worth since the entire table is 5.5 terabytes large.
+- Make sure to alter the schema.yml file in staging folder to fit your own BigQuery database. For example mine looks like:
+  ```yml
+  sources:
+  - name: staging
+    database: geo-lightning
+    schema: lightning_strikes
 
+    tables:
+      - name: lightning_2021 #raw lightning data in the US for 2021 taken from NOAA's bigquery table https://console.cloud.google.com/bigquery(cameo:product/noaa-public/lightning)?project=geo-lightning
+      - name: zipcodes #geometry data for each zipcode
+      - name: states #list of all 50 US States
+  ```
 
 
 
