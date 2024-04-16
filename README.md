@@ -26,12 +26,15 @@ Using dbt Cloud to create a pipeline of tables in BigQuery. The pipleline looks 
   - **daily_lightning_by_state** - lightning strikes per state per day
   - **monthly_lightning** - lightning strikes per zipcode per month
 
-# Data Warehouse - 
-## After building and running the workflow in dbt Cloud your views and tables should look like this
+# Data Warehouse
+## BigQuery
+After building and running the workflow in dbt Cloud your views and tables should look like this
+
 ![BigQuery tables](https://github.com/danecrosby/Postal-Lightning/assets/59389278/5adeec68-2b87-41fa-821f-8c30c77cac2d)
 
 ## Clustering and Paritioning of core models
 ### These three tables are materialized because they will be accessed by Looker Studio.
+They are paritioned by month because by Looker Studio dashboard has monthly filters because lightning data and weather patterns become more interesting when viewed monthly. Clustering happens by state and then date. Clustering by state because the next important filter I use in the dashboard is the state filter. Lastly the clustering by date makes sense because every graph and map uses the date dimension and ordering chronologically should make those, esepcially graphs over time, faster and more efficient. One exception is the **monthly_lightning** table, which is partitioned by a month integer and therefore has no date dimension to cluster by, so I clustered by zipcode instead which might help if I wanted to list entries by zipcode.
 
 daily_lightning            |  daily_lightning_by_state |  monthly_lightning
 :-------------------------:|:-------------------------:|:-------------------------:
@@ -49,6 +52,9 @@ daily_lightning            |  daily_lightning_by_state |  monthly_lightning
 <img src="https://github.com/danecrosby/Postal-Lightning/assets/59389278/3019f5c7-015c-4dd5-8c4b-315e93fe52f9" width="60%" height="60%">
 
 *hover over filled areas for additional lightning strike and city info*
+
+# How to run
+Simply fork the code into your own repository and connect dbt Cloud to your GitHub account. Instructions on how to do that here (https://docs.getdbt.com/docs/cloud/git/connect-github)[https://docs.getdbt.com/docs/cloud/git/connect-github]
 
 
 
