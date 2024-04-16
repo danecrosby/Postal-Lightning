@@ -1,5 +1,5 @@
 # Postal-Lightning
-This project maps lightning strikes geographical data onto US Postal codes. This makes it easier to show the data as a heatmap or to track historical lightning data for individual postal codes.
+This project maps lightning strikes geographical data onto US Postal codes. Geographical data is interesting, but doesn't tell us which postal code, county, city, or state that lightning is hitting. This project takes takes that geographical data and turns it into postal code data so it can be analyzed in a number of different ways. It also greatly reduces the size of the data for easy dashboarding.
 
 This project takes 2021 US lightning stike data from [NOAA Cloud-to-Ground Lightning Strikes](https://console.cloud.google.com/bigquery(cameo:product/noaa-public/lightning)?project=geo-lightning&ws=!1m0), daily lightning strikes aggregated into 0.1 x 0.1 degree tiles, sized roughly 11 km^2, and maps that data onto US postal codes by determining which of these tiles falls into which postal code area. It uses the `ST_CONTAINS()` [function](https://postgis.net/docs/ST_Contains.html) and the polygon from the zipcodes table and calculates if the center of the NOAA tiles lies in the postal code's polygon.
 
