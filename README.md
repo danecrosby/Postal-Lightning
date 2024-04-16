@@ -1,4 +1,4 @@
-# Geo2Postal Lighting
+# Geo2Postal Lightning
 This project maps NOAA's lightning strike geo data onto US Postal codes. Geographical data is interesting, but doesn't tell us which postal code, county, city, or state that lightning is hitting. This project takes takes that geographical data and turns it into postal code data so it can be analyzed in a number of different ways. It also greatly reduces the size of the data for easy dashboarding.
 
 ### How it works
@@ -82,7 +82,7 @@ ON
 # How to run
 - Fork the code into your own repository and connect dbt Cloud to your GitHub account. Instructions on how to do that here: https://docs.getdbt.com/docs/cloud/git/connect-github
 - Then link dbt Cloud to BigQuery or other data warehouse. Instructions here: https://docs.getdbt.com/guides/bigquery?step=1
-- You can then extract data from NOAA's lighting grid map from https://console.cloud.google.com/bigquery(cameo:product/noaa-public/lightning)?project=geo-lightning&ws=!1m0 . I don't reccomend sampling more than 1 year's worth since the entire table from 1987-present is 5.5 terabytes large.
+- You can then extract data from NOAA's lightning grid map from https://console.cloud.google.com/bigquery(cameo:product/noaa-public/lightning)?project=geo-lightning&ws=!1m0 . I don't reccomend sampling more than 1 year's worth since the entire table from 1987-present is 5.5 terabytes large.
 - Make sure to alter the schema.yml file in staging folder to fit your own BigQuery database. For example mine looks like:
   ```yml
   sources:
