@@ -54,9 +54,9 @@ daily_lightning            |  daily_lightning_by_state |  monthly_lightning
 *hover over filled areas for additional lightning strike and city info*
 
 # How to run
-Simply fork the code into your own repository and connect dbt Cloud to your GitHub account. Instructions on how to do that here: https://docs.getdbt.com/docs/cloud/git/connect-github
-Then link dbt Cloud to BigQuery or other data warehouse. Instructions here: https://docs.getdbt.com/guides/bigquery?step=1
-You can extract data from NOAA's lighting grid map from
+- Fork the code into your own repository and connect dbt Cloud to your GitHub account. Instructions on how to do that here: https://docs.getdbt.com/docs/cloud/git/connect-github
+- Then link dbt Cloud to BigQuery or other data warehouse. Instructions here: https://docs.getdbt.com/guides/bigquery?step=1
+- You can then extract data from NOAA's lighting grid map from https://console.cloud.google.com/bigquery(cameo:product/noaa-public/lightning)?project=geo-lightning&ws=!1m0 . I don't reccomend sampling more than 1 year's worth since the entire table is 5.5 terrabytes large.
 
 
 
