@@ -26,17 +26,29 @@ Using dbt Cloud to create a pipeline of tables in BigQuery. The pipleline looks 
   - **daily_lightning_by_state** - lightning strikes per state per day
   - **monthly_lightning** - lightning strikes per zipcode per month
 
-## Clustering and Partitioning of core models
+# Data Warehouse - 
+## After building and running the workflow in dbt Cloud your views and tables should look like this
+![BigQuery tables](https://github.com/danecrosby/Postal-Lightning/assets/59389278/5adeec68-2b87-41fa-821f-8c30c77cac2d)
+
+## Clustering and Paritioning of core models
+### These three tables are materialized because they will be accessed by Looker Studio.
 
 daily_lightning            |  daily_lightning_by_state |  monthly_lightning
 :-------------------------:|:-------------------------:|:-------------------------:
 ![daily_lightning](https://github.com/danecrosby/Postal-Lightning/assets/59389278/ab3703ea-4f05-4cf1-b9f0-a16c2caf1777)  |  ![daily_by_states](https://github.com/danecrosby/Postal-Lightning/assets/59389278/202773c4-d9ea-4682-a68e-1515630bd1e0) | ![monthly_lightning](https://github.com/danecrosby/Postal-Lightning/assets/59389278/5fbefcd8-5495-43d1-b2c6-cb6cb0c91ea1)
 
+
+
 # Dashboards
 ### [2021 US Lightning Heatmap Dashboard](https://lookerstudio.google.com/reporting/2bd2b75f-fde4-4acf-8cd4-e8e2434a88d7/page/XxCwD) - *can take several seconds to load*
 <img src="https://github.com/danecrosby/Postal-Lightning/assets/59389278/a4fb4cc2-fda5-441d-bb65-b5f895fd2892" width="60%" height="60%">
 
-**Controllable fields are State and Month**
+*Controllable fields are State and Month*
+
+### [2021 Lightning Filled Map Dashboard](https://lookerstudio.google.com/reporting/88e6e66d-e14c-41c2-85d8-8cea759d8a75/page/cnzwD) - *state by state*
+<img src="https://github.com/danecrosby/Postal-Lightning/assets/59389278/3019f5c7-015c-4dd5-8c4b-315e93fe52f9" width="60%" height="60%">
+
+*hover over filled areas for additional lightning strike and city info*
 
 
 
